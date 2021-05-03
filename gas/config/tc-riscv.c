@@ -1894,7 +1894,7 @@ riscv_ip (char *str, struct riscv_cl_insn *ip, expressionS *imm_expr,
       }
 
   insn = (struct riscv_opcode *) str_hash_find (hash, str);
-  if (!strcmp(str, "gradd")) {
+  if (!strcmp(str, "gradd") || !strcmp(str, "graddw")) {
     fprintf("xzl found %s : %p\n", str, insn);
   }
 
