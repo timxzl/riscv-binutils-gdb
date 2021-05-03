@@ -272,7 +272,7 @@ init_ext_version_hash (const struct riscv_ext_version *table)
     {
       const char *name = table[i].name;
       if (str_hash_insert (hash, name, &table[i], 0) != NULL)
-	as_fatal (_("duplicate %s"), name);
+	as_fatal (_("duplicate xzl init_ext_version_hash %s"), name);
 
       i++;
       while (table[i].name
@@ -623,7 +623,7 @@ init_opcode_names_hash (void)
 
   for (opcode = &opcode_name_list[0]; opcode->name != NULL; ++opcode)
     if (str_hash_insert (opcode_names_hash, opcode->name, opcode, 0) != NULL)
-      as_fatal (_("duplicate %s"), opcode->name);
+      as_fatal (_("duplicate xzl init_opcode_names_hash %s"), opcode->name);
 }
 
 /* Find `s` is a valid opcode name or not,
@@ -680,7 +680,7 @@ hash_reg_name (enum reg_class class, const char *name, unsigned n)
 {
   void *hash = ENCODE_REG_HASH (class, n);
   if (str_hash_insert (reg_names_hash, name, hash, 0) != NULL)
-    as_fatal (_("duplicate %s"), name);
+    as_fatal (_("duplicate xzl hash_reg_name %s"), name);
 }
 
 static void
@@ -1065,7 +1065,7 @@ init_opcode_hash (const struct riscv_opcode *opcodes,
     {
       const char *name = opcodes[i].name;
       if (str_hash_insert (hash, name, &opcodes[i], 0) != NULL)
-	as_fatal (_("duplicate %s"), name);
+	as_fatal (_("duplicate xzl init_opcode_hash %s"), name);
 
       do
 	{
@@ -1894,6 +1894,9 @@ riscv_ip (char *str, struct riscv_cl_insn *ip, expressionS *imm_expr,
       }
 
   insn = (struct riscv_opcode *) str_hash_find (hash, str);
+  if (!strcmp(str, "gradd")) {
+    fprintf("xzl found %s : %p\n", str, insn);
+  }
 
   argsStart = s;
   for ( ; insn && insn->name && strcmp (insn->name, str) == 0; insn++)
